@@ -21,12 +21,11 @@ export default class MainContent extends Component {
                     className='cart-sidebar'
                     direction='right'
                     icon='labeled'
-                    onHide={this.handleSidebarHide}
-                    vertical
+                    vertical='true'
                     visible={visibleCart}
                     width='wide'
                 >
-                <Cart />
+                <Cart toggleShowCart={this.toggleShowCart} />
                 </Sidebar>
                 <Sidebar.Pusher>
                     <PizzaMenu />

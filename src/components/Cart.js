@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import {  Header, Button } from 'semantic-ui-react';
+import { Header, Button, Icon } from 'semantic-ui-react';
 
 class Cart extends Component {
     render() {
         return (
             <div className='cart-content'>
+                <Icon
+                    name='close'
+                    onClick={this.props.toggleShowCart}
+                    size='large'
+                    style={{ cursor: 'pointer', padding: '15px' }}
+                />
                 <Header
                     dividing as='h2'
                     inverted

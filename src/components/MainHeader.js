@@ -10,6 +10,7 @@ const MainHeader = ({ toggleShowCart }) => {
                 inverted
                 name='shopping cart'
                 onClick={toggleShowCart}
+                size='large'
             />
         </Header>
     );

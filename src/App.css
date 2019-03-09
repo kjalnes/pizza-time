@@ -2,8 +2,12 @@
     height: 100%;
 }
 
+h1 {
+    margin: 0;
+}
+
 .pushable {
-    height: calc(100% - 105px); /* Total window height - header height */
+    height: calc(100% - 91px); /* Total window height - header height */
 }
 
 .ui.header {
@@ -12,7 +16,6 @@
 
 .cart-icon {
     float: right;
-    padding: 1em;
     cursor: pointer;
 }
 
@@ -21,6 +24,8 @@
     background-color: #000;
     color: #fff;
     border-bottom: 4px solid firebrick;
+    display: grid;
+    grid-template-columns: 95% 10%;
 }
 
 .pizza-menu-content {

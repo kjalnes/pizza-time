@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "apollo-boost": "^0.3.1",
+    "graphql": "^14.1.1",
     "i": "^0.3.6",
     "npm": "^6.9.0",
     "react": "^16.8.4",
+    "react-apollo": "^2.5.2",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8",
     "semantic-ui": "^2.4.2",
