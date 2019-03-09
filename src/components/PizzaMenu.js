@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Header, Segment } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import PizzaMenuItem from './PizzaMenuItem';
 
 const PIZZA_SIZES_QUERY = gql`
     query pizzaSizesQuery {
@@ -24,24 +25,13 @@ class PizzaMenu extends Component {
                 <Query query={PIZZA_SIZES_QUERY}>
                     {
                         ({ loading, error, data }) => {
-                            if (loading) {
-                                return <h4>Loading Pizzas..</h4>
-                            }
-
-                            if (error) {
-                                console.log(error);
-                            }
+                            if (loading) return <h4>Loading Pizzas..</h4>
+                            if (error) console.log(error);
 
                             return <div>
-                                {
-                                    data.pizzaSizes.map((pizza) => (
-                                        <Segment vertical>
-                                            {pizza.name}
-                                            {pizza.basePrice}
-                                            {pizza.maxToppings}
-                                        </Segment>
-                                    ))
-                            }
+                                {data.pizzaSizes.map(pizza => (
+                                    <PizzaMenuItem pizza={pizza} />
+                                ))}
                             </div>
                         }
                     }
