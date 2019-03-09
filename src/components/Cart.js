@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Header, Button, Icon } from 'semantic-ui-react';
 
-class Cart extends Component {
+export default class Cart extends Component {
     render() {
         return (
             <div className='cart-content'>
@@ -21,11 +21,3 @@ class Cart extends Component {
         );
     }
 }
-
-export default Cart;
-
-
-
-
-
-
