@@ -113,5 +113,4 @@ class PizzaDetails extends Component {
     }
 }
 
-
 export default connect(null, { addToCart })(PizzaDetails)

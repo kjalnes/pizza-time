@@ -8,6 +8,7 @@ const calculateTotal = (cartItems) => {
 
 const pizzaReducer = (state = initialState, action) => {
     let newState;
+
     switch(action.type) {
         case ADD_TO_CART:
             newState = state.cartItems.concat(action.data);

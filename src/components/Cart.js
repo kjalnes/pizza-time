@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { Header, Button, Icon, List } from 'semantic-ui-react';
+import { Header, Button, Icon, List, Divider } from 'semantic-ui-react';
 import { firstLetterCapitalized } from '../utils/helpers';
 import { removeFromCart } from '../redux/actions';
 
@@ -19,12 +19,12 @@ class Cart extends Component {
         const { cart: { cartItems, total } } = this.props;
 
         return (
-            <div className='cart-content'>
+            <div className='cart-content' style={{margin: '1em'}}>
                 <Icon
                     name='close'
                     onClick={this.props.toggleShowCart}
                     size='large'
-                    style={{ cursor: 'pointer', padding: '15px' }}
+                    style={{ cursor: 'pointer' }}
                 />
                 <Header
                     dividing as='h2'
@@ -36,26 +36,29 @@ class Cart extends Component {
                 {cartItems.length ?
                     <List>
                         {cartItems.map(({ name, total, selectedToppings, id }) => (
-                            <List.Item key={uuid()}>
-                                <Icon
-                                    name='close'
-                                    onClick={this.onRemoveCartItemClick}
-                                    size='small'
-                                    id={id}
-                                    style={{ cursor: 'pointer', padding: '15px' }}
-                                />
-                                <h4>{firstLetterCapitalized(name)} pizza</h4>
-                                <h5>Toppings</h5>
-                                <List>
-                                    {selectedToppings.map(({ name }) => <List.Item key={name}>{name}</List.Item>)}
-                                </List>
-                                <h5>Total ${total}</h5>
-                            </List.Item>
+                            <Fragment>
+                                <List.Item key={uuid()}>
+                                    <Icon
+                                        name='close'
+                                        onClick={this.onRemoveCartItemClick}
+                                        size='small'
+                                        id={id}
+                                        style={{ cursor: 'pointer', padding: '15px', float: 'right' }}
+                                    />
+                                    <h3>{firstLetterCapitalized(name)} pizza</h3>
+                                    <h5 style={{textDecoration: 'underline'}}>Toppings</h5>
+                                    <List>
+                                        {selectedToppings.map(({ name }) => <List.Item key={name}>{name}</List.Item>)}
+                                    </List>
+                                    <h5 style={{textAlign: 'right'}}>Total ${total}</h5>
+                                </List.Item>
+                                <Divider inverted />
+                            </Fragment>
                         ))
                     }</List> :
                     null
                 }
-                <h2>Total ${total}</h2>
+                <h2 style={{textAlign: 'right'}}>Total ${total}</h2>
             </div>
         );
     }

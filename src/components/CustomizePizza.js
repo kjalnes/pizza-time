@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import PizzaDetails from './PizzaDetails';
@@ -36,6 +36,7 @@ export default function CustomizePizza(props) {
 
     return (
         <div className='pizza-menu-content'>
+            <Link to='/'>Back to menu</Link>
             <Query query={PIZZA_SIZE_BY_NAME_QUERY}>
                 {({ loading, error, data }) => {
                     if (loading) return <h4>Loading Pizza Details..</h4>;
