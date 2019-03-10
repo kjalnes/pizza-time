@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { ApolloProvider } from 'react-apollo';
-import ApolloClient from 'apollo-boost';
 import { BrowserRouter } from 'react-router-dom';
 import MainContent from './components/MainContent';
 import 'semantic-ui/dist/semantic.min.css';
 import './App.css';
 
-const client = new ApolloClient({
-  uri: 'https://core-graphql.dev.waldo.photos/pizza'
-});
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import client from './ApolloClient';
 
 class App extends Component {
 
@@ -19,14 +18,15 @@ class App extends Component {
     render() {
         return (
             <ApolloProvider client={client}>
-                <BrowserRouter>
-                    <Fragment>
+                <Provider store={store}>
+                    <BrowserRouter>
                         <MainContent />
-                    </Fragment>
-                </BrowserRouter>
+                    </BrowserRouter>
+                </Provider>
             </ApolloProvider>
         );
     }
 }
+
 
 export default App;

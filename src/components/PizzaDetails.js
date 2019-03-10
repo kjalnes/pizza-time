@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { Header, Segment } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Header, Segment, Button } from 'semantic-ui-react';
 import { firstLetterCapitalized } from '../utils/helpers';
 import Toppings from './Toppings';
+import { addToCart } from '../redux/actions';
 
 const getToppings = (toppings) => {
     return toppings.reduce((selected, toppingData) => {
@@ -11,14 +13,14 @@ const getToppings = (toppings) => {
         }
         return selected;
     }, []);
-}
+};
 
 // Calculates pizza price including the default selected toppings
 const getInitialPrice = (basePrice, toppings) => {
     return basePrice + toppings.reduce((total, topping) => total + topping.price, 0);
-}
+};
 
-export default class PizzaDetails extends Component {
+class PizzaDetails extends Component {
     constructor(props) {
         super(props);
         const { pizza } = props;
@@ -28,8 +30,7 @@ export default class PizzaDetails extends Component {
         this.state = {
             selectedToppings,
             total,
-            maxToppings: pizza.maxToppings,
-            toppingCount: selectedToppings.length
+            maxToppings: pizza.maxToppings
         };
     }
 
@@ -62,8 +63,17 @@ export default class PizzaDetails extends Component {
         }
     }
 
-    toppingIsSelected = (toppingName) => {
-        return this.state.selectedToppings.some(({ name }) => name === toppingName);
+    onAddToCartClick = () => {
+        const { selectedToppings, total } = this.state;
+        const { name, addToCart } = this.props;
+
+        const pizzaDetails = {
+            name,
+            selectedToppings,
+            total
+        };
+
+        addToCart(pizzaDetails);
     }
 
     render() {
@@ -88,11 +98,16 @@ export default class PizzaDetails extends Component {
                     toppings={toppings}
                     maxToppingsReached={maxToppingsReached}
                     onCheckBoxChange={this.onCheckBoxChange}
+                    selectedToppings={selectedToppings}
                     toppingIsSelected={this.toppingIsSelected}
                 />
                 <hr />
                 <h4>Total price for pizza ${total}</h4>
+                <Button onClick={this.onAddToCartClick}>Add to cart</Button>
             </Fragment>
         );
     }
 }
+
+
+export default connect(null, { addToCart })(PizzaDetails)

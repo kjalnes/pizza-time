@@ -21,3 +21,9 @@ export default class Cart extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        cart: state.cartReducer
+    }
+}

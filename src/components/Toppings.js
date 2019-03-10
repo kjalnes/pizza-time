@@ -6,8 +6,12 @@ export default function Toppings(props) {
         toppings,
         maxToppingsReached,
         onCheckBoxChange,
-        toppingIsSelected
+        selectedToppings
     } = props;
+
+    const toppingIsSelected = (toppingName) => {
+        return selectedToppings.some(({ name }) => name === toppingName);
+    }
 
     return (
         <Segment vertical>
@@ -15,6 +19,7 @@ export default function Toppings(props) {
             <List>
                 {toppings.map(({ topping: { name, price }, defaultSelected }) => {
                     const selected = toppingIsSelected(name);
+
                     return (
                         <List.Item key={name}>
                             <Checkbox
