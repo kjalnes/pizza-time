@@ -65,8 +65,9 @@ class PizzaDetails extends Component {
 
     onAddToCartClick = () => {
         const { selectedToppings, total } = this.state;
-        const { name, addToCart } = this.props;
+        const { pizza: { name }, addToCart } = this.props;
 
+        console.log(name)
         const pizzaDetails = {
             name,
             selectedToppings,
