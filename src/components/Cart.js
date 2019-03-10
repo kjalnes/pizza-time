@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import uuid from 'uuid';
 import { Header, Button, Icon, List } from 'semantic-ui-react';
 import { firstLetterCapitalized } from '../utils/helpers';
-import uuid from 'uuid';
+import { removeFromCart } from '../redux/actions';
 
 class Cart extends Component {
+    state = {}
+
+    onRemoveCartItemClick = (ev, data) => {
+        const { id } = data;
+        const { removeFromCart } = this.props;
+        removeFromCart({ id });
+    }
 
     render() {
 
-        const { cart: { cartItems } } = this.props;
+        const { cart: { cartItems, total } } = this.props;
 
         return (
             <div className='cart-content'>
@@ -26,9 +34,16 @@ class Cart extends Component {
                 </Header>
 
                 {cartItems.length ?
-                    <List divided    inverted >
-                        {cartItems.map(({ name, total, selectedToppings }) => (
+                    <List>
+                        {cartItems.map(({ name, total, selectedToppings, id }) => (
                             <List.Item key={uuid()}>
+                                <Icon
+                                    name='close'
+                                    onClick={this.onRemoveCartItemClick}
+                                    size='small'
+                                    id={id}
+                                    style={{ cursor: 'pointer', padding: '15px' }}
+                                />
                                 <h4>{firstLetterCapitalized(name)} pizza</h4>
                                 <h5>Toppings</h5>
                                 <List>
@@ -40,6 +55,7 @@ class Cart extends Component {
                     }</List> :
                     null
                 }
+                <h2>Total ${total}</h2>
             </div>
         );
     }
@@ -49,4 +65,4 @@ const mapStateToProps = ({ cart }) => {
     return { cart };
 };
 
-export default connect(mapStateToProps)(Cart)
+export default connect(mapStateToProps, { removeFromCart })(Cart)

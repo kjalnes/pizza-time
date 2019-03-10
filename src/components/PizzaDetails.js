@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import uuid from 'uuid';
 import { Header, Segment, Button } from 'semantic-ui-react';
 import { firstLetterCapitalized } from '../utils/helpers';
 import Toppings from './Toppings';
@@ -66,10 +67,12 @@ class PizzaDetails extends Component {
     onAddToCartClick = () => {
         const { selectedToppings, total } = this.state;
         const { pizza: { name }, addToCart } = this.props;
+        const id = uuid();
 
-        console.log(name)
+
         const pizzaDetails = {
             name,
+            id,
             selectedToppings,
             total
         };
