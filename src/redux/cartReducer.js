@@ -1,34 +1,29 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from './constants';
+import { calculateTotal } from '../pureFunctions';
 
 const initialState = { cartItems: [], total: 0 };
 
-const calculateTotal = (cartItems) => {
-    return cartItems.reduce((total, item) => total + item.total, 0);
-}
-
-const pizzaReducer = (state = initialState, action) => {
-    let newState;
+export default function pizzaReducer(state = initialState, action) {
+    let cartItems;
 
     switch(action.type) {
         case ADD_TO_CART:
-            newState = state.cartItems.concat(action.data);
+            cartItems = state.cartItems.concat(action.data);
 
             return {
                 ...state,
-                cartItems: newState,
-                total: calculateTotal(newState)
+                cartItems,
+                total: calculateTotal(cartItems)
             };
         case REMOVE_FROM_CART:
-            newState = state.cartItems.filter(({ id }) => id !== action.id);
+            cartItems = state.cartItems.filter(({ id }) => id !== action.id);
 
             return {
                 ...state,
-                cartItems: newState,
-                total: calculateTotal(newState)
-            }
+                cartItems,
+                total: calculateTotal(cartItems)
+            };
         default:
             return state;
     }
 }
-
-export default pizzaReducer;

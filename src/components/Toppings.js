@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Segment, Checkbox, List, Message } from 'semantic-ui-react';
+import { toppingIsSelected } from '../pureFunctions';
 
 export default function Toppings(props) {
     const {
@@ -9,16 +10,11 @@ export default function Toppings(props) {
         selectedToppings
     } = props;
 
-    const toppingIsSelected = (toppingName) => {
-        return selectedToppings.some(({ name }) => name === toppingName);
-    }
-
     return (
         <Segment vertical>
-        {/* double loop, could this be done better???? */}
             <List>
                 {toppings.map(({ topping: { name, price }, defaultSelected }) => {
-                    const selected = toppingIsSelected(name);
+                    const selected = toppingIsSelected(selectedToppings, name);
 
                     return (
                         <List.Item key={name}>

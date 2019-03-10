@@ -1,30 +1,10 @@
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import PizzaDetails from './PizzaDetails';
-
-const generateQuery = (pizzaSize) => {
-    return gql`
-        query pizzaSizeByNameQuery {
-            pizzaSizeByName(name: ${pizzaSize}) {
-                basePrice,
-                name,
-                maxToppings,
-                toppings {
-                    defaultSelected
-                    topping {
-                        name
-                        price
-                    }
-                }
-            }
-        }
-    `;
-}
+import { pizzaSizeByName } from '../queries';
 
 export default function CustomizePizza(props) {
-
     const validPizzaSizes = ['SMALL', 'MEDIUM', 'LARGE'];
     const pizzaSize = props.match.params.pizzaSize.toUpperCase();
     const invalidSize = validPizzaSizes.indexOf(pizzaSize) < 0;
@@ -32,12 +12,10 @@ export default function CustomizePizza(props) {
     // If params is not a valid pizza size, redirect to homepage
     if (invalidSize) return <Redirect to='/' />;
 
-    const PIZZA_SIZE_BY_NAME_QUERY = generateQuery(pizzaSize);
-
     return (
         <div className='pizza-menu-content'>
             <Link to='/'>Back to menu</Link>
-            <Query query={PIZZA_SIZE_BY_NAME_QUERY}>
+            <Query query={pizzaSizeByName(pizzaSize)}>
                 {({ loading, error, data }) => {
                     if (loading) return <h4>Loading Pizza Details..</h4>;
                     if (error) console.log(error);
@@ -48,4 +26,3 @@ export default function CustomizePizza(props) {
         </div>
     );
 }
-

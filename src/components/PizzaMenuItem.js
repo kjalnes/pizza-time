@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Segment, Button } from 'semantic-ui-react';
-import { firstLetterCapitalized } from '../utils/helpers';
+import { firstLetterCapitalized } from '../pureFunctions';
 
 export default function PizzaMenuItem ({ pizza: { name, basePrice, maxToppings } }) {
     return (

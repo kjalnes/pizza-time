@@ -1,37 +1,34 @@
 import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { Header, Segment, Button } from 'semantic-ui-react';
-import { firstLetterCapitalized } from '../utils/helpers';
 import Toppings from './Toppings';
 import { addToCart } from '../redux/actions';
-
-const getToppings = (toppings) => {
-    return toppings.reduce((selected, toppingData) => {
-
-        if (toppingData.defaultSelected) {
-            selected.push(toppingData.topping);
-        }
-        return selected;
-    }, []);
-};
-
-// Calculates pizza price including the default selected toppings
-const getInitialPrice = (basePrice, toppings) => {
-    return basePrice + toppings.reduce((total, topping) => total + topping.price, 0);
-};
+import {
+    firstLetterCapitalized,
+    getDefaultToppings,
+    getInitialPrice,
+    formatPrice
+} from '../pureFunctions';
 
 class PizzaDetails extends Component {
     constructor(props) {
         super(props);
-        const { pizza } = props;
-        const selectedToppings = getToppings(pizza.toppings);
-        const total = getInitialPrice(pizza.basePrice, selectedToppings);
+        const {
+            pizza: {
+                toppings,
+                basePrice,
+                maxToppings
+            }
+        } = props;
+        const selectedToppings = getDefaultToppings(toppings);
+        const total = getInitialPrice(basePrice, selectedToppings);
 
         this.state = {
             selectedToppings,
             total,
-            maxToppings: pizza.maxToppings
+            maxToppings
         };
     }
 
@@ -54,7 +51,6 @@ class PizzaDetails extends Component {
     }
 
     onCheckBoxChange = (ev, data) => {
-        const { selectedToppings } = this.state;
         const { checked, label, price } = data;
 
         if (checked) {
@@ -66,18 +62,18 @@ class PizzaDetails extends Component {
 
     onAddToCartClick = () => {
         const { selectedToppings, total } = this.state;
-        const { pizza: { name }, addToCart } = this.props;
+        const { pizza: { name }, addToCart, history } = this.props;
         const id = uuid();
-
 
         const pizzaDetails = {
             name,
             id,
             selectedToppings,
-            total
+            total: formatPrice(total)
         };
 
         addToCart(pizzaDetails);
+        history.push('/');
     }
 
     render() {
@@ -103,14 +99,16 @@ class PizzaDetails extends Component {
                     maxToppingsReached={maxToppingsReached}
                     onCheckBoxChange={this.onCheckBoxChange}
                     selectedToppings={selectedToppings}
-                    toppingIsSelected={this.toppingIsSelected}
                 />
-                <hr />
-                <h4>Total price for pizza ${total}</h4>
-                <Button onClick={this.onAddToCartClick}>Add to cart</Button>
+                <div style={{ textAlign: 'right '}}>
+                    <h3>Total price for pizza ${total.toFixed(2)}</h3>
+                    <Button basic size='large' onClick={this.onAddToCartClick}>
+                        Add to cart
+                    </Button>
+                </div>
             </Fragment>
         );
     }
 }
 
-export default connect(null, { addToCart })(PizzaDetails)
+export default withRouter(connect(null, { addToCart })(PizzaDetails));

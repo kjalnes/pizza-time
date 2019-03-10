@@ -1,18 +1,8 @@
 import React, { Fragment } from 'react';
 import { Header } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import PizzaMenuItem from './PizzaMenuItem';
-
-const PIZZA_SIZES_QUERY = gql`
-    query pizzaSizesQuery {
-        pizzaSizes {
-            name
-            basePrice
-            maxToppings
-        }
-    }
-`;
+import { PIZZA_SIZES_QUERY } from '../queries';
 
 export default function PizzaMenu() {
     return (

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { Sidebar } from 'semantic-ui-react'
 import MainHeader from './MainHeader';
@@ -27,7 +27,7 @@ export default class MainContent extends Component {
                         visible={visibleCart}
                         width='wide'
                     >
-                    <Cart toggleShowCart={this.toggleShowCart} />
+                        <Cart toggleShowCart={this.toggleShowCart} />
                     </Sidebar>
                     <Sidebar.Pusher>
                         <Route exact path='/' component={PizzaMenu} />

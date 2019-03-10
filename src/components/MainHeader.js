@@ -1,7 +1,7 @@
 import React from 'react';
 import {  Header, Icon } from 'semantic-ui-react';
 
-const MainHeader = ({ toggleShowCart }) => {
+export default function MainHeader({ toggleShowCart }) {
     return (
         <Header className='banner'>
             <h1>It's Pizza Time</h1>
@@ -15,14 +15,3 @@ const MainHeader = ({ toggleShowCart }) => {
         </Header>
     );
 }
-
-export default MainHeader;
-
-
-
-
-
-
-
-
-

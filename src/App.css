@@ -1,8 +1,9 @@
 #root, .main-content {
     height: 100%;
+    background-color: antiquewhite;
 }
 
-h1, h3, h4, h5 {
+.cart-content h1, .cart-content h3, .cart-content h4, .cart-content h5 {
     margin: 0;
 }
 
@@ -30,6 +31,10 @@ h1, h3, h4, h5 {
     border-bottom: 4px solid firebrick;
     display: grid;
     grid-template-columns: 95% 10%;
+}
+
+.ui.header.banner h1 {
+    margin: 0;
 }
 
 .pizza-menu-content {
