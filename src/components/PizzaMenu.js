@@ -29,7 +29,7 @@ export default function PizzaMenu() {
                     return (
                         <Fragment>
                             {data.pizzaSizes.map(pizza => (
-                                <PizzaMenuItem pizza={pizza} />
+                                <PizzaMenuItem pizza={pizza} key={pizza.name} />
                             ))}
                         </Fragment>
                     );

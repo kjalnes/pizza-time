@@ -10,7 +10,6 @@ const client = new ApolloClient({
   uri: 'https://core-graphql.dev.waldo.photos/pizza'
 });
 
-
 class App extends Component {
 
     // in componentDidMount look for a cart in localstorage

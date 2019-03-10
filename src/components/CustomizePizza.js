@@ -25,9 +25,9 @@ const generateQuery = (pizzaSize) => {
 
 export default function CustomizePizza(props) {
 
-    const pizzaSizes = ['SMALL', 'MEDIUM', 'LARGE'];
+    const validPizzaSizes = ['SMALL', 'MEDIUM', 'LARGE'];
     const pizzaSize = props.match.params.pizzaSize.toUpperCase();
-    const invalidSize = pizzaSizes.indexOf(pizzaSize) < 0;
+    const invalidSize = validPizzaSizes.indexOf(pizzaSize) < 0;
 
     // If params is not a valid pizza size, redirect to homepage
     if (invalidSize) return <Redirect to='/' />;
