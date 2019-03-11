@@ -9,10 +9,6 @@ import 'semantic-ui/dist/semantic.min.css';
 import './App.css';
 
 export default function App() {
-
-    // in componentDidMount look for a cart in localstorage
-    // if cart is found add it to redux
-    // add middleware that persits redux store changes to localstorage
     return (
         <ApolloProvider client={client}>
             <Provider store={store}>
