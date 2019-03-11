@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/kjalnes/pizza-time/settings/precache-manifest.d9df83d801275270b83654fd2f845e4d.js"
+  "/kjalnes/pizza-time/precache-manifest.99cbed2c8f4c7140df3967e3fffe4550.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/kjalnes/pizza-time/settings/index.html", {
+workbox.routing.registerNavigationRoute("/kjalnes/pizza-time/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
