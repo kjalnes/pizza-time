@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
@@ -12,57 +12,43 @@ import {
     formatPrice
 } from '../pureFunctions';
 
-class PizzaDetails extends Component {
-    constructor(props) {
-        super(props);
-        const {
-            pizza: {
-                toppings,
-                basePrice,
-                maxToppings
-            }
-        } = props;
-        const selectedToppings = getDefaultToppings(toppings);
-        const total = getInitialPrice(basePrice, selectedToppings);
+function PizzaDetails(props) {
+    const {
+        pizza: {
+            basePrice,
+            maxToppings,
+            name,
+            toppings
+        }
+    } = props;
+    const defaultToppings = getDefaultToppings(toppings);
+    const initialTotal = getInitialPrice(basePrice, defaultToppings);
+    const [ selectedToppings, updateSelectedToppings ] = useState(defaultToppings);
+    const [ total, updateTotal ] = useState(initialTotal);
+    const maxToppingsReached = maxToppings === selectedToppings.length;
 
-        this.state = {
-            selectedToppings,
-            total,
-            maxToppings
-        };
-    }
+    const addTopping = (name, price) => {
+        updateSelectedToppings(selectedToppings.concat({ name, price }));
+        updateTotal(total + price);
+    };
 
-    addTopping = (name, price) => {
-        const { selectedToppings, total } = this.state;
+    const removeTopping = (name, price) => {
+        updateSelectedToppings(selectedToppings.filter(topping => topping.name !== name));
+        updateTotal(total - price);
+    };
 
-        return {
-            selectedToppings: selectedToppings.concat({ name, price }),
-            total: total + price
-        };
-    }
-
-    removeTopping = (name, price) => {
-        const { selectedToppings, total } = this.state;
-
-        return {
-            selectedToppings: selectedToppings.filter(topping => topping.name !== name),
-            total: total - price
-        };
-    }
-
-    onCheckBoxChange = (ev, data) => {
+    const onCheckBoxChange = (ev, data) => {
         const { checked, label, price } = data;
 
         if (checked) {
-            this.setState(this.addTopping(label, price));
+            addTopping(label, price);
         } else {
-            this.setState(this.removeTopping(label, price));
+            removeTopping(label, price);
         }
-    }
+    };
 
-    onAddToCartClick = () => {
-        const { selectedToppings, total } = this.state;
-        const { pizza: { name }, addToCart, history } = this.props;
+    const onAddToCartClick = () => {
+        const { pizza: { name }, addToCart, history } = props;
         const id = uuid();
 
         const pizzaDetails = {
@@ -74,41 +60,35 @@ class PizzaDetails extends Component {
 
         addToCart(pizzaDetails);
         history.push('/');
-    }
+    };
 
-    render() {
-        const { name, basePrice, maxToppings, toppings } = this.props.pizza;
-        const { selectedToppings, total } = this.state;
-        const maxToppingsReached = maxToppings === selectedToppings.length;
-
-        return (
-            <Fragment>
-                <Header as='h2' textAlign='center'>
-                    Customize your {firstLetterCapitalized(name)} Pizza
-                </Header>
-                <hr />
-                <Segment vertical>
-                    <p>From ${basePrice}</p>
-                    {maxToppings ?
-                        <p>Add maximum {maxToppings} toppings</p> :
-                        <p>Hurray! Unlimited toppings</p>
-                    }
-                </Segment>
-                <Toppings
-                    toppings={toppings}
-                    maxToppingsReached={maxToppingsReached}
-                    onCheckBoxChange={this.onCheckBoxChange}
-                    selectedToppings={selectedToppings}
-                />
-                <div style={{ textAlign: 'right '}}>
-                    <h3>Total price for pizza ${total.toFixed(2)}</h3>
-                    <Button basic size='large' onClick={this.onAddToCartClick}>
-                        Add to cart
-                    </Button>
-                </div>
-            </Fragment>
-        );
-    }
+    return (
+        <Fragment>
+            <Header as='h2' textAlign='center'>
+                Customize your {firstLetterCapitalized(name)} Pizza
+            </Header>
+            <hr />
+            <Segment vertical>
+                <p>From ${basePrice}</p>
+                {maxToppings ?
+                    <p>Add maximum {maxToppings} toppings</p> :
+                    <p>Hurray! Unlimited toppings</p>
+                }
+            </Segment>
+            <Toppings
+                toppings={toppings}
+                maxToppingsReached={maxToppingsReached}
+                onCheckBoxChange={onCheckBoxChange}
+                selectedToppings={selectedToppings}
+            />
+            <div style={{ textAlign: 'right '}}>
+                <h3>Total price for pizza ${total.toFixed(2)}</h3>
+                <Button basic size='large' onClick={onAddToCartClick}>
+                    Add to cart
+                </Button>
+            </div>
+        </Fragment>
+    );
 }
 
 export default withRouter(connect(null, { addToCart })(PizzaDetails));

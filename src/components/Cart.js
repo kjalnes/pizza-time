@@ -7,7 +7,7 @@ import CartItems from './CartItems';
 const Cart = props => {
     const {
         cart: { cartItems, total },
-        toggleShowCart,
+        onToggleCart,
         removeFromCart
     } = props;
     const onRemoveCartItemClick = (ev, data) => {
@@ -19,7 +19,7 @@ const Cart = props => {
         <div className='cart-content' style={{margin: '1em'}}>
             <Icon
                 name='close'
-                onClick={toggleShowCart}
+                onClick={onToggleCart}
                 size='large'
                 style={{ cursor: 'pointer' }}
             />
